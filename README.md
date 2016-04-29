@@ -20,10 +20,10 @@ In order to make it work, I have to:
 
 ## How to Start
 
-`
-  npm i
-  npm start
-`
+```
+npm i
+npm start
+```
 
 ## Version Hisotry
 
