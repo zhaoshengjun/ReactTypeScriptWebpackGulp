@@ -1,28 +1,52 @@
 import * as React from 'react';
-import {Component, PropTypes} from 'react';
+import {Component} from 'react';
+import * as ReactDom from 'react-dom';
 
-import {render} from 'react-dom';
+class App extends Component<any, any> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      red: 0,
+      green: 0,
+      blue:0
+    }
+    this.update = this.update.bind(this);
+  }
 
-class Greeter extends Component<any, any> {
-  static propTypes;
-  static defaultProps;
+  update() {     
+    this.setState({
+      red: ReactDom.findDOMNode(this.refs.red.refs.inp).value,
+      green: ReactDom.findDOMNode(this.refs.green.refs.inp).value,
+      blue: ReactDom.findDOMNode(this.refs.blue.refs.inp).value,
+    })
+  }  
+
   render() {
     return (
-      <h1>{this.props.salutation}</h1>
-    )
+      <div>
+        <Slider ref="red" update={this.update} /> {this.state.red}
+        <Slider ref="green" update={this.update} /> {this.state.green}
+        <Slider ref="blue" update={this.update} /> {this.state.blue}
+      </div>
+    );
   }
 }
 
-Greeter.propTypes = {
-  // salutation: PropTypes.string.isRequired
-  salutation: PropTypes.string
+class Slider extends Component<any, any> {
+
+  render() {
+    return (
+      <div>
+        <input
+          ref="inp"
+          type="range"
+          min="0"
+          max="255"
+          onChange={this.props.update}
+          />
+      </div>
+    );
+  }
 }
 
-Greeter.defaultProps = {
-  salutation: 'Hello World'
-}
-
-render(
-  <Greeter salutation="hi hello nihao" />,
-  document.getElementById('root')
-);
+ReactDom.render(<App />, document.getElementById('root'));
